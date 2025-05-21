@@ -5,12 +5,17 @@ import SimpleImportSort from 'eslint-plugin-simple-import-sort'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 
+import autoImportGlobals from './.eslintrc-auto-import.json'
+
 export default defineConfigWithVueTs(
 	{
 		name: 'app/files-to-lint',
 		files: ['**/*.{ts,mts,tsx,vue}'],
 		languageOptions: {
-			globals: globals.browser
+			globals: {
+				...globals.browser,
+				...autoImportGlobals.globals
+			}
 		},
 		plugins: {
 			'simple-import-sort': SimpleImportSort
