@@ -17,7 +17,7 @@ export default defineConfig({
 				enabled: true,
 				globalsPropValue: true
 			},
-			imports: ['vue', 'vue-router', 'pinia']
+			imports: ['vue', 'vue-router', 'pinia', 'vue-i18n']
 		})
 	],
 	resolve: {
