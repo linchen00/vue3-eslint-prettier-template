@@ -7,6 +7,9 @@ import ToolingIcon from './icons/IconTooling.vue'
 import WelcomeItem from './WelcomeItem.vue'
 
 const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
+
+const router = useRouter()
+router.push('/')
 </script>
 
 <template>
@@ -15,7 +18,6 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
 			<DocumentationIcon />
 		</template>
 		<template #heading>Documentation</template>
-		<a href=""></a>
 		<a
 			href="https://vuejs.org/"
 			target="_blank"

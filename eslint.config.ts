@@ -14,7 +14,8 @@ export default defineConfigWithVueTs(
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...autoImportGlobals.globals
+				...autoImportGlobals.globals,
+				definePage: 'readonly'
 			}
 		},
 		plugins: {
@@ -96,6 +97,12 @@ export default defineConfigWithVueTs(
 				}
 			],
 			'vue/padding-line-between-blocks': ['error', 'always']
+		}
+	},
+	{
+		files: ['src/views/**/*.vue'],
+		rules: {
+			'vue/multi-word-component-names': 'off'
 		}
 	}
 )
