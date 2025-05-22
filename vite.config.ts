@@ -2,6 +2,9 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
 import { VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
@@ -27,9 +30,21 @@ export default defineConfig({
 			},
 			imports: ['vue', VueRouterAutoImports, 'pinia', 'vue-i18n', '@vueuse/core']
 		}),
+		Icons({
+			compiler: 'vue3',
+			iconSource: 'legacy',
+			customCollections: {
+				custom: FileSystemIconLoader('./src/assets/icons')
+			}
+		}),
 		Components({
 			dts: true,
-			resolvers: [VueUseComponentsResolver()]
+			resolvers: [
+				VueUseComponentsResolver(),
+				IconsResolver({
+					customCollections: ['custom']
+				})
+			]
 		})
 	],
 	resolve: {
