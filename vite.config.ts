@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
+import { VantResolver } from '@vant/auto-import-resolver';
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -14,42 +15,44 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [
-		VueRouter({
-			dts: true,
-			routesFolder: 'src/views'
-		}),
-		vue(),
-		vueDevTools(),
-		tailwindcss(),
-		AutoImport({
-			dts: true,
-			eslintrc: {
-				enabled: true,
-				globalsPropValue: true
-			},
-			imports: ['vue', VueRouterAutoImports, 'pinia', 'vue-i18n', '@vueuse/core']
-		}),
-		Icons({
-			compiler: 'vue3',
-			iconSource: 'legacy',
-			customCollections: {
-				custom: FileSystemIconLoader('./src/assets/icons')
-			}
-		}),
-		Components({
-			dts: true,
-			resolvers: [
-				VueUseComponentsResolver(),
-				IconsResolver({
-					customCollections: ['custom']
-				})
-			]
-		})
-	],
-	resolve: {
-		alias: {
-			'@': fileURLToPath(new URL('./src', import.meta.url))
-		}
-	}
+  plugins: [
+    VueRouter({
+      dts: true,
+      routesFolder: 'src/views'
+    }),
+    vue(),
+    vueDevTools(),
+    tailwindcss(),
+    AutoImport({
+      dts: true,
+      eslintrc: {
+        enabled: true,
+        globalsPropValue: true
+      },
+      imports: ['vue', VueRouterAutoImports, 'pinia', 'vue-i18n', '@vueuse/core'],
+      resolvers: [VantResolver()]
+    }),
+    Icons({
+      compiler: 'vue3',
+      iconSource: 'legacy',
+      customCollections: {
+        custom: FileSystemIconLoader('./src/assets/icons')
+      }
+    }),
+    Components({
+      dts: true,
+      resolvers: [
+        VueUseComponentsResolver(),
+        IconsResolver({
+          customCollections: ['custom']
+        }),
+        VantResolver(),
+      ]
+    })
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 })
